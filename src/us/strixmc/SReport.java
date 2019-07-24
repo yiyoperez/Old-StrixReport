@@ -12,7 +12,6 @@ import us.strixmc.Commands.CommandToggle;
 import us.strixmc.Commands.StrixReport;
 import us.strixmc.GUI.ReportGUI;
 import us.strixmc.Utils.Cooldowns;
-import us.strixmc.Utils.TxtFile;
 import us.strixmc.Utils.UpdateChecker;
 import us.strixmc.Utils.Utils;
 
@@ -42,7 +41,6 @@ public class SReport extends JavaPlugin implements Listener {
                 }
             });
         }
-        CreateLog();
         configHeader();
 
         loadEvents();
@@ -87,21 +85,6 @@ public class SReport extends JavaPlugin implements Listener {
                 });
             }
         }
-    }
-
-    private void CreateLog() {
-        TxtFile logFile = new TxtFile(this, File.separator + "Changelog", "StrixReport_" + instance.getDescription().getVersion());
-        logFile.clear();
-        logFile.addLine("ChangeLog File StrixReport Version: " + instance.getDescription().getVersion());
-        logFile.addLine("Latest update  12/06/2018");
-        logFile.addLine("");
-        logFile.addLine(" - Fixed broken prefix line on toggle reports command.");
-        logFile.addLine(" - Fixed \"Right click to change message\" on management gui.");
-        logFile.addLine(" - Added click-teleport command config and is changeable on gui.");
-        logFile.addLine(" - Added customizable report gui.");
-        logFile.addLine(" - Added player reports amount.");
-        logFile.addLine("");
-        logFile.write();
     }
 
     private void configHeader() {

@@ -10,22 +10,12 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/../../Dependencias/spigot-1.8.8-R0.1-SNAPSHOT.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES>
-          <root url="jar://$MODULE_DIR$/../../Dependencias/spigot-1.8.8-R0.1-SNAPSHOT.jar!/" />
-        </SOURCES>
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
           <root url="jar://$APPLICATION_PLUGINS_DIR$/lombok-plugin/lib/lombok-plugin-0.16.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
       </library>
     </orderEntry>
+    <orderEntry type="library" name="PaperSpigot-1.8.8-R0.1-SNAPSHOT-latest" level="project" />
   </component>
 </module>

@@ -17,7 +17,7 @@ public class Utils implements Listener {
     public static HashMap<Player, Integer> Ramount;
 
     static {
-        Utils.Ramount = new HashMap<Player, Integer>();
+        Utils.Ramount = new HashMap<>();
         Utils.toggledReports = new ArrayList<>();
         Utils.test = new HashMap<>();
     }

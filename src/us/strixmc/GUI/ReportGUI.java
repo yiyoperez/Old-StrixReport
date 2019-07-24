@@ -18,9 +18,6 @@ import us.strixmc.SReport;
 import us.strixmc.Utils.Cooldowns;
 import us.strixmc.Utils.Utils;
 
-import java.lang.reflect.Array;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 public class ReportGUI implements Listener {
@@ -60,7 +57,7 @@ public class ReportGUI implements Listener {
                 c.setDurability((short) data);
             }
 
-            List lore = SReport.instance.getConfig().getStringList("GUI.items." + key + ".lore");
+            List<String> lore = SReport.instance.getConfig().getStringList("GUI.items." + key + ".lore");
             if (SReport.instance.getConfig().isSet("GUI.items." + key + ".lore")) {
                 m.setLore(Utils.cList(lore));
             }
@@ -82,11 +79,8 @@ public class ReportGUI implements Listener {
         if (inv != null && i != null && e.getInventory().getName().equalsIgnoreCase(Utils.c(SReport.instance.getConfig().getString("GUI.name")))) {
             if (i.hasItemMeta() && i.getItemMeta().hasDisplayName()) {
                 e.setCancelled(true);
-                Player[] arrayOfPlayer;
-                int j = (arrayOfPlayer = Bukkit.getOnlinePlayers().toArray(new Player[0])).length;
 
-                for (int ix = 0; ix < j; ix++) {
-                    Player online = arrayOfPlayer[ix];
+                for (Player online : Bukkit.getOnlinePlayers()) {
                     if (online.hasPermission(SReport.instance.getConfig().getString("permissions.report.receive"))) {
                         if (!Utils.toggledReports.contains(online)) {
                             for (String s : SReport.instance.getConfig().getStringList("report")) {

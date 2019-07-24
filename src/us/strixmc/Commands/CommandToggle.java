@@ -12,28 +12,27 @@ public class CommandToggle implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-        if (cmd.getName().equalsIgnoreCase("togglereport")) {
-            if (sender instanceof Player) {
-                Player p = (Player) sender;
-                if (p.hasPermission(SReport.instance.getConfig().getString("permissions.report.toggle"))) {
-                    if (args.length == 0) {
-                        if (!Utils.toggledReports.contains(p)) {
-                            Utils.toggledReports.add(p);
-                            p.sendMessage(Utils.c(SReport.instance.getConfig().getString("toggle-report.enabled").replace("%prefix%", Utils.Prefix(""))));
-                        } else {
-                            Utils.toggledReports.remove(p);
-                            p.sendMessage(Utils.c(SReport.instance.getConfig().getString("toggle-report.disabled").replace("%prefix%", Utils.Prefix(""))));
-                        }
-                    }
-                    if (args.length > 0) {
-                        p.sendMessage(Utils.c(SReport.instance.getConfig().getString("toggle-report.usage").replace("%command%", label).replace("%prefix%", Utils.Prefix(""))));
-                    }
-                } else {
-                    p.sendMessage(Utils.c(SReport.instance.getConfig().getString("no-permissions").replace("%prefix%", Utils.Prefix(""))));
-                }
-            } else {
-                sender.sendMessage("This command can't be perform on Console.");
+        if (sender instanceof Player) {
+            Player p = (Player) sender;
+            if (!p.hasPermission(SReport.instance.getConfig().getString("permissions.report.toggle"))) {
+                p.sendMessage(Utils.c(SReport.instance.getConfig().getString("no-permissions").replace("%prefix%", Utils.Prefix(""))));
+                return true;
             }
+            if (args.length == 0) {
+                if (!Utils.toggledReports.contains(p)) {
+                    Utils.toggledReports.add(p);
+                    p.sendMessage(Utils.c(SReport.instance.getConfig().getString("toggle-report.enabled").replace("%prefix%", Utils.Prefix(""))));
+                } else {
+                    Utils.toggledReports.remove(p);
+                    p.sendMessage(Utils.c(SReport.instance.getConfig().getString("toggle-report.disabled").replace("%prefix%", Utils.Prefix(""))));
+                }
+            }
+            if (args.length > 0) {
+                p.sendMessage(Utils.c(SReport.instance.getConfig().getString("toggle-report.usage").replace("%command%", label).replace("%prefix%", Utils.Prefix(""))));
+            }
+
+        } else {
+            sender.sendMessage("This command can't be perform on Console.");
         }
         return false;
     }

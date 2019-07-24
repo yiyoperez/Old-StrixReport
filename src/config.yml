@@ -1,6 +1,6 @@
 check_updates: true
 
-cooldown: 15
+cooldown: 30
 
 toggle:
   report-gui:
@@ -66,9 +66,3 @@ GUI:
   name: "&cStrix&4Report &7GUI"
   rows: 1
   items: []
-
-report-gui:
-  usage:
-  - ""
-  - "%prefix% &cUsage: /%command% &7<player>"
-  - ""
