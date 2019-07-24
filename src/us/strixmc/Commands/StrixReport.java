@@ -606,6 +606,7 @@ public class StrixReport implements CommandExecutor, TabCompleter, Listener {
                         SReport.instance.saveConfig();
                         SReport.instance.reloadConfig();
                         p.closeInventory();
+                        //
                         Bukkit.getScheduler().runTaskLater(SReport.instance, () -> manage(p), 2);
                     }
                     if (e.getClick().isRightClick()) {
