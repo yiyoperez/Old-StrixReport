@@ -1,0 +1,16 @@
+name: StrixReport
+main: us.strixmc.SReport
+version: 1.3.6
+author: Sliide_
+description: Fully configurable report plugin.
+
+commands:
+  togglereport:
+    descriptio: Command to toggle reports receive.
+    aliases: [tr, toggler]
+  strixreport:
+    description: Command to manage strixreport plugin.
+    aliases: [sr, sreport]
+  report:
+    description: Command to report hackers/players.
+    aliases: [infohack, repor]

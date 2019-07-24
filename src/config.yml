@@ -1,0 +1,74 @@
+check_updates: true
+
+cooldown: 15
+
+toggle:
+  report-gui:
+    enabled: false
+  reminder:
+    enabled: true
+  self-report:
+    enabled: false
+  prefix:
+    enabled: true
+  click-teleport:
+    enabled: true
+  reported:
+    enabled: true
+
+permissions:
+  report:
+    main: report.use
+    receive: report.receive
+    admin: report.admin
+    toggle: report.toggle
+
+no-permissions: "%prefix% &cYou can't perform this command."
+
+prefix: "&8[&cStrix&4Report&8] &7\xbb&r "
+
+reported: "%prefix% &aYou successfully reported &c%target% &afor &c%reason%"
+
+reminder: "%prefix% &aYour report has been sent to all online staff.."
+
+not-found: "%prefix% &cThe player &7%player% &cwas not found."
+
+self-report: "%prefix% &cYou can't report yourself."
+
+on-cooldown: "&cYou need wait another &f%seconds% &cseconds to report again."
+
+click-teleport:
+  message: "&7\xbb &cClick to Teleport &7\xab"
+  hover: "&7Teleport to &f\xbb &c%target%"
+  command: "/teleport %target%"
+
+toggle-report:
+  usage: "%prefix% &cUsage: /%command%"
+  enabled: "&eYour report messages has been &aEnabled"
+  disabled: "&eYour report messages has been &cDisabled"
+
+usage:
+- ""
+- "%prefix% &cUsage: /%command% &7<player> <reason>"
+- ""
+
+report:
+- ""
+- "&4&m-----&c&m-----&4&m-----&c&m-----&4&m-----&c&m-----&4&m-----"
+- ""
+- " &a%player% &7has reported &c%target% &7(%amount%)"
+- "  &7Reason: &c%reason%"
+- ""
+- "&4&m-----&c&m-----&4&m-----&c&m-----&4&m-----&c&m-----&4&m-----"
+- ""
+
+GUI:
+  name: "&cStrix&4Report &7GUI"
+  rows: 1
+  items: []
+
+report-gui:
+  usage:
+  - ""
+  - "%prefix% &cUsage: /%command% &7<player>"
+  - ""
