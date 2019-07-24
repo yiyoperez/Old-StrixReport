@@ -18,19 +18,13 @@ public class CommandToggle implements CommandExecutor {
                 p.sendMessage(Utils.c(SReport.instance.getConfig().getString("no-permissions").replace("%prefix%", Utils.Prefix(""))));
                 return true;
             }
-            if (args.length == 0) {
-                if (!Utils.toggledReports.contains(p)) {
-                    Utils.toggledReports.add(p);
-                    p.sendMessage(Utils.c(SReport.instance.getConfig().getString("toggle-report.enabled").replace("%prefix%", Utils.Prefix(""))));
-                } else {
-                    Utils.toggledReports.remove(p);
-                    p.sendMessage(Utils.c(SReport.instance.getConfig().getString("toggle-report.disabled").replace("%prefix%", Utils.Prefix(""))));
-                }
+            if (!Utils.toggledReports.contains(p)) {
+                Utils.toggledReports.add(p);
+                p.sendMessage(Utils.c(SReport.instance.getConfig().getString("toggle-report.enabled").replace("%prefix%", Utils.Prefix(""))));
+            } else {
+                Utils.toggledReports.remove(p);
+                p.sendMessage(Utils.c(SReport.instance.getConfig().getString("toggle-report.disabled").replace("%prefix%", Utils.Prefix(""))));
             }
-            if (args.length > 0) {
-                p.sendMessage(Utils.c(SReport.instance.getConfig().getString("toggle-report.usage").replace("%command%", label).replace("%prefix%", Utils.Prefix(""))));
-            }
-
         } else {
             sender.sendMessage("This command can't be perform on Console.");
         }
