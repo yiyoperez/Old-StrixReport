@@ -44,18 +44,15 @@ public class CommandReport implements CommandExecutor {
                         p.sendMessage(Utils.c(SReport.instance.getConfig().getString("not-found").replace("%player%", args[0]).replace("%prefix%", prefix(""))));
                         return true;
                     }
-                    if (SReport.instance.getConfig().getBoolean("toggle.report-gui.enabled")) {
-                        if (target == sender) {
-                            if (SReport.instance.getConfig().getBoolean("toggle.self-report.enabled")) {
-                                ReportGUI.guiReport(p, target);
-                                Utils.test.put(p.getName(), target.getName());
-                            } else {
-                                p.sendMessage(Utils.c(SReport.instance.getConfig().getString("self-report").replace("%prefix%", prefix(""))));
-                            }
-                        } else {
-                            ReportGUI.guiReport(p, target);
-                            Utils.test.put(p.getName(), target.getName());
+                    if (target == sender) {
+                        if (!SReport.instance.getConfig().getBoolean("toggle.self-report.enabled")) {
+                            p.sendMessage(Utils.c(SReport.instance.getConfig().getString("self-report").replace("%prefix%", prefix(""))));
+                            return true;
                         }
+                    }
+                    if (SReport.instance.getConfig().getBoolean("toggle.report-gui.enabled")) {
+                        ReportGUI.guiReport(p, target);
+                        Utils.test.put(p.getName(), target.getName());
                     } else {
                         if (args.length == 1) {
                             for (String s : SReport.instance.getConfig().getStringList("usage")) {
@@ -67,21 +64,7 @@ public class CommandReport implements CommandExecutor {
                             for (int i = 1; i < args.length; ++i) {
                                 msg = String.valueOf(msg) + args[i] + " ";
                             }
-                            if (!Utils.Ramount.containsKey(target)) {
-                                Utils.Ramount.put(target, 0);
-                            }
-                            if (Utils.Ramount.containsKey(target)) {
-                                int amount = Utils.Ramount.get(target);
-                                if (amount != 1 || Utils.Ramount.get(target) != null) {
-                                    Utils.Ramount.put(target, amount + 1);
-                                }
-                            }
-                            if (target == sender) {
-                                if (!SReport.instance.getConfig().getBoolean("toggle.self-report.enabled")) {
-                                    p.sendMessage(Utils.c(SReport.instance.getConfig().getString("self-report").replace("%prefix%", prefix(""))));
-                                    return true;
-                                }
-                            }
+                            Utils.updateAmount(target);
                             for (Player staff : Bukkit.getOnlinePlayers()) {
                                 if (staff.hasPermission(SReport.instance.getConfig().getString("permissions.report.receive"))) {
                                     if (!Utils.toggledReports.contains(staff)) {

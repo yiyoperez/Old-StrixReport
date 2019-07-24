@@ -83,8 +83,10 @@ public class ReportGUI implements Listener {
                 for (Player online : Bukkit.getOnlinePlayers()) {
                     if (online.hasPermission(SReport.instance.getConfig().getString("permissions.report.receive"))) {
                         if (!Utils.toggledReports.contains(online)) {
+                            Player target = Bukkit.getPlayer(Utils.test.get(p.getName()));
+                            Utils.updateAmount(target);
                             for (String s : SReport.instance.getConfig().getStringList("report")) {
-                                online.sendMessage(Utils.c(s).replace("%reason%", ChatColor.stripColor(i.getItemMeta().getDisplayName())).replace("%player%", p.getName()).replace("%target%", Utils.test.get(p.getName())));
+                                online.sendMessage(Utils.c(s).replace("%reason%", ChatColor.stripColor(i.getItemMeta().getDisplayName())).replace("%player%", p.getName()).replace("%target%",target.getName()).replace("%amount%", Utils.Ramount.get(target).toString()));
                             }
                             if (SReport.instance.getConfig().getBoolean("toggle.click-teleport.enabled")) {
                                 final TextComponent textComponent = new TextComponent();

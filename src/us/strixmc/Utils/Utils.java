@@ -77,6 +77,18 @@ public class Utils implements Listener {
         }
     }
 
+    public static void updateAmount(Player target){
+        if (!Utils.Ramount.containsKey(target)) {
+            Utils.Ramount.put(target, 0);
+        }
+        if (Utils.Ramount.containsKey(target)) {
+            int amount = Utils.Ramount.get(target);
+            if (amount != 1 || Utils.Ramount.get(target) != null) {
+                Utils.Ramount.put(target, amount + 1);
+            }
+        }
+    }
+
     public static String Prefix(String s) {
         if (SReport.instance.getConfig().getBoolean("toggle.prefix.enabled")) {
             return c(SReport.instance.getConfig().getString("prefix") + s);
