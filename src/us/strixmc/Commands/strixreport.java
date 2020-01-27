@@ -140,7 +140,7 @@ public class strixreport implements CommandExecutor, TabCompleter, Listener {
                 sb.append("§7").append(subcommand);
             }
             Player p = (Player) sender;
-            if (SReport.instance.getConfig().getString("permissions.report.admin") == null || SReport.instance.getConfig().getString("permissions.report.admin") == "") {
+            if (SReport.instance.getConfig().getString("permissions.report.admin") == null || SReport.instance.getConfig().getString("permissions.report.admin").equals("")) {
                 p.sendMessage(utils.c("&cpermissions.report.admin &7can't be empty or null."));
             } else {
                 if (!p.hasPermission(SReport.instance.getConfig().getString("permissions.report.admin"))) {
@@ -230,7 +230,7 @@ public class strixreport implements CommandExecutor, TabCompleter, Listener {
     }
 
     @EventHandler
-    void onChanges(AsyncPlayerChatEvent e) {
+    public void onChanges(AsyncPlayerChatEvent e) {
         String msg = e.getMessage();
         if (newCooldown.contains(e.getPlayer())) {
             e.setCancelled(true);
@@ -393,7 +393,7 @@ public class strixreport implements CommandExecutor, TabCompleter, Listener {
     }
 
     @EventHandler
-    void onManage(InventoryClickEvent e) {
+    public void onManage(InventoryClickEvent e) {
         Inventory inv = e.getClickedInventory();
         Player p = (Player) e.getWhoClicked();
         ItemStack i = e.getCurrentItem();

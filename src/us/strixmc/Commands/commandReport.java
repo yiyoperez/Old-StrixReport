@@ -16,11 +16,11 @@ import us.strixmc.Utils.utils;
 
 public class commandReport implements CommandExecutor {
 
-    public static String prefix(String s) {
+    private String prefix() {
         if (SReport.instance.getConfig().getBoolean("toggle.prefix.enabled")) {
-            return utils.c(SReport.instance.getConfig().getString("prefix" + s));
+            return utils.c(SReport.instance.getConfig().getString("prefix" ));
         }
-        return utils.c(s);
+        return "";
     }
 
     @Override
@@ -28,12 +28,12 @@ public class commandReport implements CommandExecutor {
         if (sender instanceof Player) {
             Player p = (Player) sender;
             if (!p.hasPermission(SReport.instance.getConfig().getString("permissions.report.main"))) {
-                p.sendMessage(utils.c(SReport.instance.getConfig().getString("no-permissions").replace("%prefix%", prefix(""))));
+                p.sendMessage(utils.c(SReport.instance.getConfig().getString("no-permissions").replace("%prefix%", prefix())));
                 return true;
             }
             if (args.length == 0) {
                 for (String s : SReport.instance.getConfig().getStringList("usage")) {
-                    p.sendMessage(utils.c(s).replace("%command%", label).replace("%prefix%", prefix("")));
+                    p.sendMessage(utils.c(s).replace("%command%", label).replace("%prefix%", prefix()));
                 }
             } else {
                 if (cooldowns.isOnCooldown("report", p)) {
@@ -41,11 +41,11 @@ public class commandReport implements CommandExecutor {
                 } else {
                     Player target = Bukkit.getPlayer(args[0]);
                     if (target == null) {
-                        p.sendMessage(utils.c(SReport.instance.getConfig().getString("not-found").replace("%player%", args[0]).replace("%prefix%", prefix(""))));
+                        p.sendMessage(utils.c(SReport.instance.getConfig().getString("not-found").replace("%player%", args[0]).replace("%prefix%", prefix())));
                         return true;
                     }
                     if (target.equals(sender) && !SReport.instance.getConfig().getBoolean("toggle.self-report.enabled")) {
-                        p.sendMessage(utils.c(SReport.instance.getConfig().getString("self-report").replace("%prefix%", prefix(""))));
+                        p.sendMessage(utils.c(SReport.instance.getConfig().getString("self-report").replace("%prefix%", prefix())));
                         return true;
                     }
                     if (SReport.instance.getConfig().getBoolean("toggle.report-gui.enabled")) {
@@ -54,7 +54,7 @@ public class commandReport implements CommandExecutor {
                     } else {
                         if (args.length == 1) {
                             for (String s : SReport.instance.getConfig().getStringList("usage")) {
-                                p.sendMessage(utils.c(s).replace("%command%", label).replace("%prefix%", prefix("")));
+                                p.sendMessage(utils.c(s).replace("%command%", label).replace("%prefix%", prefix()));
                             }
                         }
                         if (args.length > 1) {
@@ -78,10 +78,10 @@ public class commandReport implements CommandExecutor {
                                 }
                             }
                             if (SReport.instance.getConfig().getBoolean("toggle.reported.enabled")) {
-                                p.sendMessage(utils.c(SReport.instance.getConfig().getString("reported").replace("%target%", target.getName()).replace("%reason%", msg).replace("%prefix%", prefix(""))));
+                                p.sendMessage(utils.c(SReport.instance.getConfig().getString("reported").replace("%target%", target.getName()).replace("%reason%", msg).replace("%prefix%", prefix())));
                             }
                             if (SReport.instance.getConfig().getBoolean("toggle.reminder.enabled")) {
-                                p.sendMessage(utils.c(SReport.instance.getConfig().getString("reminder").replace("%prefix%", prefix(""))));
+                                p.sendMessage(utils.c(SReport.instance.getConfig().getString("reminder").replace("%prefix%", prefix())));
                             }
                         }
                     }

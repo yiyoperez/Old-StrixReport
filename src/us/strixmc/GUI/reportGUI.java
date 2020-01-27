@@ -70,7 +70,7 @@ public class reportGUI implements Listener {
     }
 
     @EventHandler
-    private void onManage(InventoryClickEvent e) {
+    public void onManage(InventoryClickEvent e) {
         Inventory inv = e.getClickedInventory();
         Player p = (Player) e.getWhoClicked();
         ItemStack i = e.getCurrentItem();
