@@ -7,13 +7,13 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
-import us.strixmc.Commands.commandReport;
-import us.strixmc.Commands.commandToggle;
-import us.strixmc.Commands.strixreport;
-import us.strixmc.GUI.reportGUI;
-import us.strixmc.Utils.cooldowns;
-import us.strixmc.Utils.updateChecker;
-import us.strixmc.Utils.utils;
+import us.strixmc.commands.commandReport;
+import us.strixmc.commands.commandToggle;
+import us.strixmc.commands.strixreport;
+import us.strixmc.gui.reportGUI;
+import us.strixmc.utils.cooldowns;
+import us.strixmc.utils.updateChecker;
+import us.strixmc.utils.utils;
 
 import java.io.File;
 

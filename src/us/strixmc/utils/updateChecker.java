@@ -1,4 +1,4 @@
-package us.strixmc.Utils;
+package us.strixmc.utils;
 
 import com.google.common.base.Preconditions;
 import com.google.gson.JsonElement;

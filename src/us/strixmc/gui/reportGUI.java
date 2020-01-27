@@ -1,4 +1,4 @@
-package us.strixmc.GUI;
+package us.strixmc.gui;
 
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.ComponentBuilder;
@@ -15,8 +15,8 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import us.strixmc.SReport;
-import us.strixmc.Utils.cooldowns;
-import us.strixmc.Utils.utils;
+import us.strixmc.utils.cooldowns;
+import us.strixmc.utils.utils;
 
 import java.util.List;
 

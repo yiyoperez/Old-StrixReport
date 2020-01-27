@@ -1,4 +1,4 @@
-package us.strixmc.Utils;
+package us.strixmc.utils;
 
 import org.bukkit.entity.Player;
 

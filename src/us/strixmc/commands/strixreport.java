@@ -1,4 +1,4 @@
-package us.strixmc.Commands;
+package us.strixmc.commands;
 
 import org.apache.commons.lang3.StringUtils;
 import org.bukkit.Bukkit;
@@ -17,7 +17,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import us.strixmc.SReport;
-import us.strixmc.Utils.utils;
+import us.strixmc.utils.utils;
 
 import java.io.File;
 import java.util.*;

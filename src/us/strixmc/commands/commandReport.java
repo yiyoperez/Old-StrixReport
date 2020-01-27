@@ -1,4 +1,4 @@
-package us.strixmc.Commands;
+package us.strixmc.commands;
 
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.ComponentBuilder;
@@ -9,10 +9,10 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import us.strixmc.GUI.reportGUI;
+import us.strixmc.gui.reportGUI;
 import us.strixmc.SReport;
-import us.strixmc.Utils.cooldowns;
-import us.strixmc.Utils.utils;
+import us.strixmc.utils.cooldowns;
+import us.strixmc.utils.utils;
 
 public class commandReport implements CommandExecutor {
 

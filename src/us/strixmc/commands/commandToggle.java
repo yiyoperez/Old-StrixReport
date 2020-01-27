@@ -1,11 +1,11 @@
-package us.strixmc.Commands;
+package us.strixmc.commands;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import us.strixmc.SReport;
-import us.strixmc.Utils.utils;
+import us.strixmc.utils.utils;
 
 public class commandToggle implements CommandExecutor {
 
