@@ -10,16 +10,16 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
-public class Utils implements Listener {
+public class utils implements Listener {
 
     public static HashMap<String, String> test;
     public static List<Player> toggledReports;
     public static HashMap<Player, Integer> Ramount;
 
     static {
-        Utils.Ramount = new HashMap<>();
-        Utils.toggledReports = new ArrayList<>();
-        Utils.test = new HashMap<>();
+        utils.Ramount = new HashMap<>();
+        utils.toggledReports = new ArrayList<>();
+        utils.test = new HashMap<>();
     }
 
     public static String c(String s) {
@@ -78,13 +78,13 @@ public class Utils implements Listener {
     }
 
     public static void updateAmount(Player target){
-        if (!Utils.Ramount.containsKey(target)) {
-            Utils.Ramount.put(target, 0);
+        if (!utils.Ramount.containsKey(target)) {
+            utils.Ramount.put(target, 0);
         }
-        if (Utils.Ramount.containsKey(target)) {
-            int amount = Utils.Ramount.get(target);
-            if (amount != 1 || Utils.Ramount.get(target) != null) {
-                Utils.Ramount.put(target, amount + 1);
+        if (utils.Ramount.containsKey(target)) {
+            int amount = utils.Ramount.get(target);
+            if (amount != 1 || utils.Ramount.get(target) != null) {
+                utils.Ramount.put(target, amount + 1);
             }
         }
     }

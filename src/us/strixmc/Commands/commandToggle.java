@@ -5,9 +5,9 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import us.strixmc.SReport;
-import us.strixmc.Utils.Utils;
+import us.strixmc.Utils.utils;
 
-public class CommandToggle implements CommandExecutor {
+public class commandToggle implements CommandExecutor {
 
 
     @Override
@@ -15,15 +15,15 @@ public class CommandToggle implements CommandExecutor {
         if (sender instanceof Player) {
             Player p = (Player) sender;
             if (!p.hasPermission(SReport.instance.getConfig().getString("permissions.report.toggle"))) {
-                p.sendMessage(Utils.c(SReport.instance.getConfig().getString("no-permissions").replace("%prefix%", Utils.Prefix(""))));
+                p.sendMessage(utils.c(SReport.instance.getConfig().getString("no-permissions").replace("%prefix%", utils.Prefix(""))));
                 return true;
             }
-            if (!Utils.toggledReports.contains(p)) {
-                Utils.toggledReports.add(p);
-                p.sendMessage(Utils.c(SReport.instance.getConfig().getString("toggle-report.enabled").replace("%prefix%", Utils.Prefix(""))));
+            if (!utils.toggledReports.contains(p)) {
+                utils.toggledReports.add(p);
+                p.sendMessage(utils.c(SReport.instance.getConfig().getString("toggle-report.enabled").replace("%prefix%", utils.Prefix(""))));
             } else {
-                Utils.toggledReports.remove(p);
-                p.sendMessage(Utils.c(SReport.instance.getConfig().getString("toggle-report.disabled").replace("%prefix%", Utils.Prefix(""))));
+                utils.toggledReports.remove(p);
+                p.sendMessage(utils.c(SReport.instance.getConfig().getString("toggle-report.disabled").replace("%prefix%", utils.Prefix(""))));
             }
         } else {
             sender.sendMessage("This command can't be perform on Console.");

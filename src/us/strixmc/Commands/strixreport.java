@@ -17,12 +17,12 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import us.strixmc.SReport;
-import us.strixmc.Utils.Utils;
+import us.strixmc.Utils.utils;
 
 import java.io.File;
 import java.util.*;
 
-public class StrixReport implements CommandExecutor, TabCompleter, Listener {
+public class strixreport implements CommandExecutor, TabCompleter, Listener {
 
     private List<Player> newReported = new ArrayList<>();
     private List<Player> newSelfReport = new ArrayList<>();
@@ -55,7 +55,7 @@ public class StrixReport implements CommandExecutor, TabCompleter, Listener {
     }
 
     private static void messages(Player p) {
-        Inventory inv = Bukkit.createInventory(null, 45, Utils.c("&cMessages GUI"));
+        Inventory inv = Bukkit.createInventory(null, 45, utils.c("&cMessages GUI"));
 
         ItemStack back = (item(Material.REDSTONE, "&cBack", Arrays.asList("&7Back to Manage GUI"), 1, 0));
 
@@ -69,22 +69,22 @@ public class StrixReport implements CommandExecutor, TabCompleter, Listener {
         ItemStack usage = new ItemStack(Material.PAINTING);
         ItemMeta usageM = usage.getItemMeta();
         ArrayList lore = new ArrayList();
-        lore.add(Utils.c("&cMessages&7:"));
+        lore.add(utils.c("&cMessages&7:"));
         for (String s : SReport.instance.getConfig().getStringList("usage")) {
-            lore.add(Utils.c(s));
+            lore.add(utils.c(s));
         }
         usageM.setLore(lore);
-        usageM.setDisplayName(Utils.c("&cUsage"));
+        usageM.setDisplayName(utils.c("&cUsage"));
         usage.setItemMeta(usageM);
         ItemStack report = new ItemStack(Material.PAINTING);
         ItemMeta reportM = report.getItemMeta();
         ArrayList rlore = new ArrayList();
-        rlore.add(Utils.c("&cMessages&7:"));
+        rlore.add(utils.c("&cMessages&7:"));
         for (String s : SReport.instance.getConfig().getStringList("report")) {
-            rlore.add(Utils.c(s));
+            rlore.add(utils.c(s));
         }
         reportM.setLore(rlore);
-        reportM.setDisplayName(Utils.c("&cReport"));
+        reportM.setDisplayName(utils.c("&cReport"));
         report.setItemMeta(reportM);
         ItemStack border = (item(Material.STAINED_GLASS_PANE, " ", Arrays.asList(""), 1, 15));
         for (int i = 0; i < 9; ++i) {
@@ -114,7 +114,7 @@ public class StrixReport implements CommandExecutor, TabCompleter, Listener {
     }
 
     private static void manage(Player p) {
-        Inventory inv = Bukkit.createInventory(null, 9, Utils.c("&cStrix&4Report &7Management"));
+        Inventory inv = Bukkit.createInventory(null, 9, utils.c("&cStrix&4Report &7Management"));
 
         inv.setItem(0, item(Material.BOOK, "&cPrefix", Arrays.asList("&cStatus&7: " + SReport.instance.getConfig().getString("toggle.prefix.enabled"), "&cMessage&7: " + SReport.instance.getConfig().getString("prefix"), " ", "&7Left Click to toggle.", "&7Right Click to change message."), 1, 0));
         inv.setItem(1, item(Material.ANVIL, "&cSelf Report", Arrays.asList("&cStatus&7: " + SReport.instance.getConfig().getString("toggle.self-report.enabled"), "&cMessage&7: " + SReport.instance.getConfig().getString("self-report"), " ", "&7Left Click to toggle.", "&7Right Click to change message."), 1, 0));
@@ -141,42 +141,42 @@ public class StrixReport implements CommandExecutor, TabCompleter, Listener {
             }
             Player p = (Player) sender;
             if (SReport.instance.getConfig().getString("permissions.report.admin") == null || SReport.instance.getConfig().getString("permissions.report.admin") == "") {
-                p.sendMessage(Utils.c("&cpermissions.report.admin &7can't be empty or null."));
+                p.sendMessage(utils.c("&cpermissions.report.admin &7can't be empty or null."));
             } else {
                 if (!p.hasPermission(SReport.instance.getConfig().getString("permissions.report.admin"))) {
                     return true;
                 }
                 if (args.length == 0) {
-                    p.sendMessage(Utils.c("&cUsage: &7/" + label + " <sub-command>"));
-                    p.sendMessage(Utils.c("  &cAvaiable sub-command(s) for '" + label + "' are " + sb.toString().replace("[", "").replace("]", "") + "&c."));
+                    p.sendMessage(utils.c("&cUsage: &7/" + label + " <sub-command>"));
+                    p.sendMessage(utils.c("  &cAvaiable sub-command(s) for '" + label + "' are " + sb.toString().replace("[", "").replace("]", "") + "&c."));
                 } else {
                     switch (args[0].toLowerCase()) {
                         case "manage": {
                             manage(p);
-                            p.sendMessage(Utils.c("&6Openening StrixReport management GUI."));
+                            p.sendMessage(utils.c("&6Openening StrixReport management GUI."));
                             break;
                         }
                         case "about":
                         case "help": {
                             p.sendMessage("");
-                            p.sendMessage(Utils.c("&cStrixReport &7Version: " + SReport.instance.getDescription().getVersion()));
+                            p.sendMessage(utils.c("&cStrixReport &7Version: " + SReport.instance.getDescription().getVersion()));
                             p.sendMessage("");
-                            p.sendMessage(Utils.c(" &cPermissions&7:"));
-                            p.sendMessage(Utils.c("  &cMain&7: " + SReport.instance.getConfig().getString("permissions.report.main")));
-                            p.sendMessage(Utils.c("  &cReceive&7: " + SReport.instance.getConfig().getString("permissions.report.receive")));
-                            p.sendMessage(Utils.c("  &cAdmin&7: " + SReport.instance.getConfig().getString("permissions.report.admin")));
+                            p.sendMessage(utils.c(" &cPermissions&7:"));
+                            p.sendMessage(utils.c("  &cMain&7: " + SReport.instance.getConfig().getString("permissions.report.main")));
+                            p.sendMessage(utils.c("  &cReceive&7: " + SReport.instance.getConfig().getString("permissions.report.receive")));
+                            p.sendMessage(utils.c("  &cAdmin&7: " + SReport.instance.getConfig().getString("permissions.report.admin")));
                             p.sendMessage("");
                             break;
                         }
                         case "reload": {
                             SReport.instance.reloadConfig();
                             SReport.instance.saveConfig();
-                            p.sendMessage(Utils.c("&cStrixReport &7Version: " + SReport.instance.getDescription().getVersion() + " &awas successfully reloaded."));
+                            p.sendMessage(utils.c("&cStrixReport &7Version: " + SReport.instance.getDescription().getVersion() + " &awas successfully reloaded."));
                             break;
                         }
                         default: {
-                            p.sendMessage(Utils.c("&cUsage: &7/" + label + " <sub-command>"));
-                            p.sendMessage(Utils.c("  &cAvaiable sub-command(s) for '" + label + "' are " + sb.toString().replace("[", "").replace("]", "") + "&c."));
+                            p.sendMessage(utils.c("&cUsage: &7/" + label + " <sub-command>"));
+                            p.sendMessage(utils.c("  &cAvaiable sub-command(s) for '" + label + "' are " + sb.toString().replace("[", "").replace("]", "") + "&c."));
 
                             break;
                         }
@@ -230,13 +230,13 @@ public class StrixReport implements CommandExecutor, TabCompleter, Listener {
     }
 
     @EventHandler
-    public void onChanges(AsyncPlayerChatEvent e) {
+    void onChanges(AsyncPlayerChatEvent e) {
         String msg = e.getMessage();
         if (newCooldown.contains(e.getPlayer())) {
             e.setCancelled(true);
             if (StringUtils.isNumeric(msg)) {
                 SReport.instance.getConfig().set("cooldown", Integer.parseInt(msg));
-                e.getPlayer().sendMessage(Utils.c("&cCooldown changed to&7: " + msg));
+                e.getPlayer().sendMessage(utils.c("&cCooldown changed to&7: " + msg));
                 SReport.instance.saveConfig();
                 SReport.instance.reloadConfig();
                 newCooldown.remove(e.getPlayer());
@@ -246,25 +246,25 @@ public class StrixReport implements CommandExecutor, TabCompleter, Listener {
                 }, 1);
             } else if (msg.equalsIgnoreCase("cancel")) {
                 newCooldown.remove(e.getPlayer());
-                e.getPlayer().sendMessage(Utils.c("&cThe new cooldown has been canceled."));
+                e.getPlayer().sendMessage(utils.c("&cThe new cooldown has been canceled."));
                 Bukkit.getScheduler().runTaskLater(SReport.instance, () -> {
                     manage(e.getPlayer());
                 }, 1);
             } else {
-                e.getPlayer().sendMessage(Utils.c("&cError while changing report cooldown. Only numbers are allowed."));
+                e.getPlayer().sendMessage(utils.c("&cError while changing report cooldown. Only numbers are allowed."));
             }
         }
         if (newCooldown2.contains(e.getPlayer())) {
             e.setCancelled(true);
             if (msg.equalsIgnoreCase("cancel")) {
                 newCooldown2.remove(e.getPlayer());
-                e.getPlayer().sendMessage(Utils.c("&cThe new cooldown message has been canceled."));
+                e.getPlayer().sendMessage(utils.c("&cThe new cooldown message has been canceled."));
                 Bukkit.getScheduler().runTaskLater(SReport.instance, () -> {
                     manage(e.getPlayer());
                 }, 1);
             } else {
                 SReport.instance.getConfig().set("on-cooldown", msg);
-                e.getPlayer().sendMessage(Utils.c("&cCooldown changed to&7: " + msg));
+                e.getPlayer().sendMessage(utils.c("&cCooldown changed to&7: " + msg));
                 SReport.instance.saveConfig();
                 SReport.instance.reloadConfig();
                 newCooldown2.remove(e.getPlayer());
@@ -277,13 +277,13 @@ public class StrixReport implements CommandExecutor, TabCompleter, Listener {
             e.setCancelled(true);
             if (msg.equalsIgnoreCase("cancel")) {
                 newCooldown.remove(e.getPlayer());
-                e.getPlayer().sendMessage(Utils.c("&cThe new command has been canceled."));
+                e.getPlayer().sendMessage(utils.c("&cThe new command has been canceled."));
                 Bukkit.getScheduler().runTaskLater(SReport.instance, () -> {
                     manage(e.getPlayer());
                 }, 1);
             } else {
                 SReport.instance.getConfig().set("click-teleport.command", "/" + msg);
-                e.getPlayer().sendMessage(Utils.c("&cClick teleport command changed to&7: " + SReport.instance.getConfig().getString("click-teleport.command")));
+                e.getPlayer().sendMessage(utils.c("&cClick teleport command changed to&7: " + SReport.instance.getConfig().getString("click-teleport.command")));
                 SReport.instance.saveConfig();
                 SReport.instance.reloadConfig();
                 newCommand.remove(e.getPlayer());
@@ -296,13 +296,13 @@ public class StrixReport implements CommandExecutor, TabCompleter, Listener {
             e.setCancelled(true);
             if (msg.equalsIgnoreCase("cancel")) {
                 newCooldown.remove(e.getPlayer());
-                e.getPlayer().sendMessage(Utils.c("&cThe new Self Report message has been canceled."));
+                e.getPlayer().sendMessage(utils.c("&cThe new Self Report message has been canceled."));
                 Bukkit.getScheduler().runTaskLater(SReport.instance, () -> {
                     manage(e.getPlayer());
                 }, 1);
             } else {
                 SReport.instance.getConfig().set("self-report", msg);
-                e.getPlayer().sendMessage(Utils.c("&cSelf Report message changed to&7: " + msg));
+                e.getPlayer().sendMessage(utils.c("&cSelf Report message changed to&7: " + msg));
                 SReport.instance.saveConfig();
                 SReport.instance.reloadConfig();
                 newSelfReport.remove(e.getPlayer());
@@ -315,7 +315,7 @@ public class StrixReport implements CommandExecutor, TabCompleter, Listener {
             e.setCancelled(true);
             if (msg.equalsIgnoreCase("cancel")) {
                 newCooldown.remove(e.getPlayer());
-                e.getPlayer().sendMessage(Utils.c("&cThe new Reminder message has been canceled."));
+                e.getPlayer().sendMessage(utils.c("&cThe new Reminder message has been canceled."));
                 Bukkit.getScheduler().runTaskLater(SReport.instance, () -> {
                     manage(e.getPlayer());
                 }, 1);
@@ -323,7 +323,7 @@ public class StrixReport implements CommandExecutor, TabCompleter, Listener {
                 SReport.instance.getConfig().set("reminder", msg);
                 SReport.instance.saveConfig();
                 SReport.instance.reloadConfig();
-                e.getPlayer().sendMessage(Utils.c("&cReminder message changed to&7: " + msg).replace("%prefix%", CommandReport.prefix("")));
+                e.getPlayer().sendMessage(utils.c("&cReminder message changed to&7: " + msg).replace("%prefix%", commandReport.prefix("")));
                 newReminder.remove(e.getPlayer());
                 Bukkit.getScheduler().runTaskLater(SReport.instance, () -> {
                     manage(e.getPlayer());
@@ -334,7 +334,7 @@ public class StrixReport implements CommandExecutor, TabCompleter, Listener {
             e.setCancelled(true);
             if (msg.equalsIgnoreCase("cancel")) {
                 newCooldown.remove(e.getPlayer());
-                e.getPlayer().sendMessage(Utils.c("&cThe new prefix has been canceled."));
+                e.getPlayer().sendMessage(utils.c("&cThe new prefix has been canceled."));
                 Bukkit.getScheduler().runTaskLater(SReport.instance, () -> {
                     manage(e.getPlayer());
                 }, 1);
@@ -343,7 +343,7 @@ public class StrixReport implements CommandExecutor, TabCompleter, Listener {
                 SReport.instance.getConfig().set("prefix", prefix);
                 SReport.instance.saveConfig();
                 SReport.instance.reloadConfig();
-                e.getPlayer().sendMessage(Utils.c("&cPrefix changed to&7: " + prefix));
+                e.getPlayer().sendMessage(utils.c("&cPrefix changed to&7: " + prefix));
                 newPrefix.remove(e.getPlayer());
                 Bukkit.getScheduler().runTaskLater(SReport.instance, () -> {
                     manage(e.getPlayer());
@@ -354,13 +354,13 @@ public class StrixReport implements CommandExecutor, TabCompleter, Listener {
             e.setCancelled(true);
             if (msg.equalsIgnoreCase("cancel")) {
                 newReported.remove(e.getPlayer());
-                e.getPlayer().sendMessage(Utils.c("&cThe new reported message has been canceled."));
+                e.getPlayer().sendMessage(utils.c("&cThe new reported message has been canceled."));
                 Bukkit.getScheduler().runTaskLater(SReport.instance, () -> {
                     manage(e.getPlayer());
                 }, 1);
             } else {
                 SReport.instance.getConfig().set("reported", msg);
-                e.getPlayer().sendMessage(Utils.c("&cReported message changed to:" + msg));
+                e.getPlayer().sendMessage(utils.c("&cReported message changed to:" + msg));
                 newReported.remove(e.getPlayer());
                 SReport.instance.saveConfig();
                 SReport.instance.reloadConfig();
@@ -393,12 +393,12 @@ public class StrixReport implements CommandExecutor, TabCompleter, Listener {
     }
 
     @EventHandler
-    private void onManage(InventoryClickEvent e) {
+    void onManage(InventoryClickEvent e) {
         Inventory inv = e.getClickedInventory();
         Player p = (Player) e.getWhoClicked();
         ItemStack i = e.getCurrentItem();
 
-        if (inv != null && i != null && e.getInventory().getName().equalsIgnoreCase(Utils.c("&cStrix&4Report &7Management"))) {
+        if (inv != null && i != null && e.getInventory().getName().equalsIgnoreCase(utils.c("&cStrix&4Report &7Management"))) {
             e.setCancelled(true);
             if (i.hasItemMeta() && i.getItemMeta().hasDisplayName()) {
                 String c = ChatColor.stripColor(e.getCurrentItem().getItemMeta().getDisplayName());
@@ -406,10 +406,10 @@ public class StrixReport implements CommandExecutor, TabCompleter, Listener {
                     if (e.getClick().isLeftClick()) {
                         if (SReport.instance.getConfig().getBoolean("toggle.prefix.enabled")) {
                             SReport.instance.getConfig().set("toggle.prefix.enabled", Boolean.FALSE);
-                            p.sendMessage(Utils.c("&7Module &cprefix &7has been &cdisabled."));
+                            p.sendMessage(utils.c("&7Module &cprefix &7has been &cdisabled."));
                         } else {
                             SReport.instance.getConfig().set("toggle.prefix.enabled", Boolean.TRUE);
-                            p.sendMessage(Utils.c("&7Module &cprefix &7was &aenabled."));
+                            p.sendMessage(utils.c("&7Module &cprefix &7was &aenabled."));
                             p.getInventory().setHeldItemSlot(c.length());
                         }
                         SReport.instance.saveConfig();
@@ -418,10 +418,10 @@ public class StrixReport implements CommandExecutor, TabCompleter, Listener {
                     }
                     if (e.getClick().isRightClick()) {
                         p.sendMessage("");
-                        p.sendMessage(Utils.c("&7&m------------------------------"));
-                        p.sendMessage(Utils.c("&6Write in chat the new Prefix."));
-                        p.sendMessage(Utils.c("&cWrite cancel to cancel the action."));
-                        p.sendMessage(Utils.c("&7&m------------------------------"));
+                        p.sendMessage(utils.c("&7&m------------------------------"));
+                        p.sendMessage(utils.c("&6Write in chat the new Prefix."));
+                        p.sendMessage(utils.c("&cWrite cancel to cancel the action."));
+                        p.sendMessage(utils.c("&7&m------------------------------"));
                         p.sendMessage("");
                         newPrefix.add(p);
                         p.closeInventory();
@@ -430,10 +430,10 @@ public class StrixReport implements CommandExecutor, TabCompleter, Listener {
                     if (e.getClick().isLeftClick()) {
                         if (SReport.instance.getConfig().getBoolean("toggle.reminder.enabled")) {
                             SReport.instance.getConfig().set("toggle.reminder.enabled", Boolean.FALSE);
-                            p.sendMessage(Utils.c("&7Module &creminder &7was &cdisabled."));
+                            p.sendMessage(utils.c("&7Module &creminder &7was &cdisabled."));
                         } else {
                             SReport.instance.getConfig().set("toggle.reminder.enabled", Boolean.TRUE);
-                            p.sendMessage(Utils.c("&7Module &creminder &7was &aenabled."));
+                            p.sendMessage(utils.c("&7Module &creminder &7was &aenabled."));
                         }
                         SReport.instance.saveConfig();
                         SReport.instance.reloadConfig();
@@ -443,11 +443,11 @@ public class StrixReport implements CommandExecutor, TabCompleter, Listener {
                     }
                     if (e.getClick().isRightClick()) {
                         p.sendMessage("");
-                        p.sendMessage(Utils.c("&7&m------------------------------"));
-                        p.sendMessage(Utils.c("&6Write in chat the new Reminder message."));
-                        p.sendMessage(Utils.c("&cWrite cancel to cancel the action."));
-                        p.sendMessage(Utils.c("&eAvaiable placeholder&7: %prefix%"));
-                        p.sendMessage(Utils.c("&7&m------------------------------"));
+                        p.sendMessage(utils.c("&7&m------------------------------"));
+                        p.sendMessage(utils.c("&6Write in chat the new Reminder message."));
+                        p.sendMessage(utils.c("&cWrite cancel to cancel the action."));
+                        p.sendMessage(utils.c("&eAvaiable placeholder&7: %prefix%"));
+                        p.sendMessage(utils.c("&7&m------------------------------"));
                         p.sendMessage("");
                         newReminder.add(p);
                         p.closeInventory();
@@ -456,10 +456,10 @@ public class StrixReport implements CommandExecutor, TabCompleter, Listener {
                     if (e.isLeftClick()) {
                         if (SReport.instance.getConfig().getBoolean("toggle.self-report.enabled")) {
                             SReport.instance.getConfig().set("toggle.self-report.enabled", Boolean.FALSE);
-                            p.sendMessage(Utils.c("&7Module &cself report &7was &cdisabled."));
+                            p.sendMessage(utils.c("&7Module &cself report &7was &cdisabled."));
                         } else {
                             SReport.instance.getConfig().set("toggle.self-report.enabled", Boolean.TRUE);
-                            p.sendMessage(Utils.c("&7Module &cself report &7was &aenabled."));
+                            p.sendMessage(utils.c("&7Module &cself report &7was &aenabled."));
                         }
                         SReport.instance.saveConfig();
                         SReport.instance.reloadConfig();
@@ -468,31 +468,31 @@ public class StrixReport implements CommandExecutor, TabCompleter, Listener {
                     if (e.isRightClick()) {
                         newSelfReport.add(p);
                         p.sendMessage("");
-                        p.sendMessage(Utils.c("&7&m------------------------------"));
-                        p.sendMessage(Utils.c("&6Write in chat the new Self Report message."));
-                        p.sendMessage(Utils.c("&cWrite cancel to cancel the action."));
-                        p.sendMessage(Utils.c("&eAvaiable placeholder&7: %prefix%"));
-                        p.sendMessage(Utils.c("&7&m------------------------------"));
+                        p.sendMessage(utils.c("&7&m------------------------------"));
+                        p.sendMessage(utils.c("&6Write in chat the new Self Report message."));
+                        p.sendMessage(utils.c("&cWrite cancel to cancel the action."));
+                        p.sendMessage(utils.c("&eAvaiable placeholder&7: %prefix%"));
+                        p.sendMessage(utils.c("&7&m------------------------------"));
                         p.sendMessage("");
                         p.closeInventory();
                     }
                 } else if (c.equalsIgnoreCase("Cooldown")) {
                     if (e.isLeftClick()) {
                         p.sendMessage("");
-                        p.sendMessage(Utils.c("&7&m------------------------------"));
-                        p.sendMessage(Utils.c("&6Write in chat the new Cooldown."));
-                        p.sendMessage(Utils.c("&cWrite cancel to cancel the action."));
-                        p.sendMessage(Utils.c("&7&m------------------------------"));
+                        p.sendMessage(utils.c("&7&m------------------------------"));
+                        p.sendMessage(utils.c("&6Write in chat the new Cooldown."));
+                        p.sendMessage(utils.c("&cWrite cancel to cancel the action."));
+                        p.sendMessage(utils.c("&7&m------------------------------"));
                         p.sendMessage("");
                         newCooldown.add(p);
                     }
                     if (e.isRightClick()) {
                         p.sendMessage("");
-                        p.sendMessage(Utils.c("&7&m------------------------------"));
-                        p.sendMessage(Utils.c("&6Write in chat the new Cooldown message."));
-                        p.sendMessage(Utils.c("&cWrite cancel to cancel the action."));
-                        p.sendMessage(Utils.c("&eAvaiable placeholder&7: %seconds%"));
-                        p.sendMessage(Utils.c("&7&m------------------------------"));
+                        p.sendMessage(utils.c("&7&m------------------------------"));
+                        p.sendMessage(utils.c("&6Write in chat the new Cooldown message."));
+                        p.sendMessage(utils.c("&cWrite cancel to cancel the action."));
+                        p.sendMessage(utils.c("&eAvaiable placeholder&7: %seconds%"));
+                        p.sendMessage(utils.c("&7&m------------------------------"));
                         p.sendMessage("");
                         newCooldown2.add(p);
                     }
@@ -501,10 +501,10 @@ public class StrixReport implements CommandExecutor, TabCompleter, Listener {
                     if (e.isLeftClick()) {
                         if (SReport.instance.getConfig().getBoolean("toggle.click-teleport.enabled")) {
                             SReport.instance.getConfig().set("toggle.click-teleport.enabled", Boolean.FALSE);
-                            p.sendMessage(Utils.c("&7Module &cclick teleport &7was &cdisabled."));
+                            p.sendMessage(utils.c("&7Module &cclick teleport &7was &cdisabled."));
                         } else {
                             SReport.instance.getConfig().set("toggle.click-teleport.enabled", Boolean.TRUE);
-                            p.sendMessage(Utils.c("&7Module &cclick teleport &7was &aenabled."));
+                            p.sendMessage(utils.c("&7Module &cclick teleport &7was &aenabled."));
                         }
                         SReport.instance.saveConfig();
                         SReport.instance.reloadConfig();
@@ -515,13 +515,13 @@ public class StrixReport implements CommandExecutor, TabCompleter, Listener {
                     if (e.isRightClick()) {
                         newCommand.add(p);
                         p.sendMessage("");
-                        p.sendMessage(Utils.c("&7&m------------------------------"));
-                        p.sendMessage(Utils.c("&6Write in chat the new Click teleport command."));
-                        p.sendMessage(Utils.c("&dInfo &c/ is not necessary."));
-                        p.sendMessage(Utils.c("&cWrite cancel to cancel the action."));
-                        p.sendMessage(Utils.c("&eAvaiable placeholder&7: %target%"));
-                        p.sendMessage(Utils.c("&cExample: teleport %target%"));
-                        p.sendMessage(Utils.c("&7&m------------------------------"));
+                        p.sendMessage(utils.c("&7&m------------------------------"));
+                        p.sendMessage(utils.c("&6Write in chat the new Click teleport command."));
+                        p.sendMessage(utils.c("&dInfo &c/ is not necessary."));
+                        p.sendMessage(utils.c("&cWrite cancel to cancel the action."));
+                        p.sendMessage(utils.c("&eAvaiable placeholder&7: %target%"));
+                        p.sendMessage(utils.c("&cExample: teleport %target%"));
+                        p.sendMessage(utils.c("&7&m------------------------------"));
                         p.sendMessage("");
                         p.closeInventory();
                     }
@@ -529,10 +529,10 @@ public class StrixReport implements CommandExecutor, TabCompleter, Listener {
                     if (e.isLeftClick()) {
                         if (SReport.instance.getConfig().getBoolean("toggle.reported.enabled")) {
                             SReport.instance.getConfig().set("toggle.reported.enabled", Boolean.FALSE);
-                            p.sendMessage(Utils.c("&7Module &cReported &7was &cdisabled."));
+                            p.sendMessage(utils.c("&7Module &cReported &7was &cdisabled."));
                         } else {
                             SReport.instance.getConfig().set("toggle.reported.enabled", Boolean.TRUE);
-                            p.sendMessage(Utils.c("&7Module &cReported &7was &aenabled."));
+                            p.sendMessage(utils.c("&7Module &cReported &7was &aenabled."));
                         }
                         SReport.instance.saveConfig();
                         SReport.instance.reloadConfig();
@@ -541,11 +541,11 @@ public class StrixReport implements CommandExecutor, TabCompleter, Listener {
                     if (e.isRightClick()) {
                         newReported.add(p);
                         p.sendMessage("");
-                        p.sendMessage(Utils.c("&7&m------------------------------"));
-                        p.sendMessage(Utils.c("&6Write in chat the new Reported message."));
-                        p.sendMessage(Utils.c("&cWrite cancel to cancel the action."));
-                        p.sendMessage(Utils.c("&eAvaiable placeholder&7: %prefix%, %target%, %reason%"));
-                        p.sendMessage(Utils.c("&7&m------------------------------"));
+                        p.sendMessage(utils.c("&7&m------------------------------"));
+                        p.sendMessage(utils.c("&6Write in chat the new Reported message."));
+                        p.sendMessage(utils.c("&cWrite cancel to cancel the action."));
+                        p.sendMessage(utils.c("&eAvaiable placeholder&7: %prefix%, %target%, %reason%"));
+                        p.sendMessage(utils.c("&7&m------------------------------"));
                         p.sendMessage("");
                         p.closeInventory();
                     }
@@ -554,10 +554,10 @@ public class StrixReport implements CommandExecutor, TabCompleter, Listener {
 
                         if (SReport.instance.getConfig().getBoolean("toggle.report-gui.enabled")) {
                             SReport.instance.getConfig().set("toggle.report-gui.enabled", Boolean.FALSE);
-                            p.sendMessage(Utils.c("&7Module &cReport GUI &7was &cdisabled."));
+                            p.sendMessage(utils.c("&7Module &cReport GUI &7was &cdisabled."));
                         } else {
                             SReport.instance.getConfig().set("toggle.report-gui.enabled", Boolean.TRUE);
-                            p.sendMessage(Utils.c("&7Module &cReport GUI &7was &aenabled."));
+                            p.sendMessage(utils.c("&7Module &cReport GUI &7was &aenabled."));
                         }
                         SReport.instance.saveConfig();
                         SReport.instance.reloadConfig();
@@ -575,7 +575,7 @@ public class StrixReport implements CommandExecutor, TabCompleter, Listener {
                 }
             }
         }
-        if (inv != null && i != null && e.getInventory().getName().equalsIgnoreCase(Utils.c("&cMessages GUI"))) {
+        if (inv != null && i != null && e.getInventory().getName().equalsIgnoreCase(utils.c("&cMessages GUI"))) {
             e.setCancelled(true);
             if (i.hasItemMeta() && i.getItemMeta().hasDisplayName()) {
                 String c = ChatColor.stripColor(e.getCurrentItem().getItemMeta().getDisplayName());

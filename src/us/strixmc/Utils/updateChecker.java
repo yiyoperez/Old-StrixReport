@@ -31,14 +31,16 @@ import org.bukkit.plugin.java.JavaPlugin;
  *
  * @author Parker Hawke - 2008Choco
  */
-public final class UpdateChecker {
+public final class updateChecker {
 
     public static final VersionScheme VERSION_SCHEME_DECIMAL = (first, second) -> {
-        String[] firstSplit = splitVersionInfo(first), secondSplit = splitVersionInfo(second);
+        String[] firstSplit = splitVersionInfo(first);
+        String[] secondSplit = splitVersionInfo(second);
         if (firstSplit == null || secondSplit == null) return null;
 
         for (int i = 0; i < Math.min(firstSplit.length, secondSplit.length); i++) {
-            int currentValue = NumberUtils.toInt(firstSplit[i]), newestValue = NumberUtils.toInt(secondSplit[i]);
+            int currentValue = NumberUtils.toInt(firstSplit[i]);
+            int newestValue = NumberUtils.toInt(secondSplit[i]);
 
             if (newestValue > currentValue) {
                 return second;
@@ -54,7 +56,7 @@ public final class UpdateChecker {
     private static final String UPDATE_URL = "https://api.spiget.org/v2/resources/%d/versions?size=1&sort=-releaseDate";
     private static final Pattern DECIMAL_SCHEME_PATTERN = Pattern.compile("\\d+(?:\\.\\d+)*");
 
-    private static UpdateChecker instance;
+    private static updateChecker instance;
 
     private UpdateResult lastResult = null;
 
@@ -62,7 +64,7 @@ public final class UpdateChecker {
     private final int pluginID;
     private final VersionScheme versionScheme;
 
-    private UpdateChecker(JavaPlugin plugin, int pluginID, VersionScheme versionScheme) {
+    private updateChecker(JavaPlugin plugin, int pluginID, VersionScheme versionScheme) {
         this.plugin = plugin;
         this.pluginID = pluginID;
         this.versionScheme = versionScheme;
@@ -93,7 +95,8 @@ public final class UpdateChecker {
                 reader.close();
 
                 JsonObject versionObject = element.getAsJsonArray().get(0).getAsJsonObject();
-                String current = plugin.getDescription().getVersion(), newest = versionObject.get("name").getAsString();
+                String current = plugin.getDescription().getVersion();
+                String newest = versionObject.get("name").getAsString();
                 String latest = versionScheme.compareVersions(current, newest);
 
                 if (latest == null) {
@@ -143,12 +146,12 @@ public final class UpdateChecker {
      *
      * @return the UpdateChecker instance
      */
-    public static UpdateChecker init(JavaPlugin plugin, int pluginID, VersionScheme versionScheme) {
+    public static updateChecker init(JavaPlugin plugin, int pluginID, VersionScheme versionScheme) {
         Preconditions.checkArgument(plugin != null, "Plugin cannot be null");
         Preconditions.checkArgument(pluginID > 0, "Plugin ID must be greater than 0");
         Preconditions.checkArgument(versionScheme != null, "null version schemes are unsupported");
 
-        return (instance == null) ? instance = new UpdateChecker(plugin, pluginID, versionScheme) : instance;
+        return (instance == null) ? instance = new updateChecker(plugin, pluginID, versionScheme) : instance;
     }
 
     /**
@@ -163,7 +166,7 @@ public final class UpdateChecker {
      *
      * @return the UpdateChecker instance
      */
-    public static UpdateChecker init(JavaPlugin plugin, int pluginID) {
+    public static updateChecker init(JavaPlugin plugin, int pluginID) {
         return init(plugin, pluginID, VERSION_SCHEME_DECIMAL);
     }
 
@@ -173,7 +176,7 @@ public final class UpdateChecker {
      *
      * @return the UpdateChecker instance
      */
-    public static UpdateChecker get() {
+    public static updateChecker get() {
         Preconditions.checkState(instance != null, "Instance has not yet been initialized. Be sure #init() has been invoked");
         return instance;
     }
@@ -258,15 +261,16 @@ public final class UpdateChecker {
     }
 
     /**
-     * Represents a result for an update query performed by {@link UpdateChecker#requestUpdateCheck()}.
+     * Represents a result for an update query performed by {@link updateChecker#requestUpdateCheck()}.
      */
     public final class UpdateResult {
 
         private final UpdateReason reason;
         private final String newestVersion;
 
-        { // An actual use for initializer blocks. This is madness!
-            UpdateChecker.this.lastResult = this;
+        // An actual use for initializer blocks. This is madness!
+        {
+            updateChecker.this.lastResult = this;
         }
 
         private UpdateResult(UpdateReason reason, String newestVersion) {

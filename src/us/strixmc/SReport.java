@@ -7,13 +7,13 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
-import us.strixmc.Commands.CommandReport;
-import us.strixmc.Commands.CommandToggle;
-import us.strixmc.Commands.StrixReport;
-import us.strixmc.GUI.ReportGUI;
-import us.strixmc.Utils.Cooldowns;
-import us.strixmc.Utils.UpdateChecker;
-import us.strixmc.Utils.Utils;
+import us.strixmc.Commands.commandReport;
+import us.strixmc.Commands.commandToggle;
+import us.strixmc.Commands.strixreport;
+import us.strixmc.GUI.reportGUI;
+import us.strixmc.Utils.cooldowns;
+import us.strixmc.Utils.updateChecker;
+import us.strixmc.Utils.utils;
 
 import java.io.File;
 
@@ -25,16 +25,16 @@ public class SReport extends JavaPlugin implements Listener {
     public void onEnable() {
         instance = this;
         if (getConfig().getBoolean("check_updates")) {
-            UpdateChecker.init(this, 42151).requestUpdateCheck().whenComplete((result, exception) -> {
+            updateChecker.init(this, 42151).requestUpdateCheck().whenComplete((result, exception) -> {
                 if (result.requiresUpdate()) {
                     this.getLogger().info(String.format("An update is available! StrixReport %s may be downloaded on SpigotMC", result.getNewestVersion()));
                     return;
                 }
 
-                UpdateChecker.UpdateReason reason = result.getReason();
-                if (reason == UpdateChecker.UpdateReason.UP_TO_DATE) {
+                updateChecker.UpdateReason reason = result.getReason();
+                if (reason == updateChecker.UpdateReason.UP_TO_DATE) {
                     this.getLogger().info(String.format("Your version of StrixReport (%s) is up to date!", result.getNewestVersion()));
-                } else if (reason == UpdateChecker.UpdateReason.UNRELEASED_VERSION) {
+                } else if (reason == updateChecker.UpdateReason.UNRELEASED_VERSION) {
                     this.getLogger().info(String.format("Your version of StrixReport (%s) is more recent than the one publicly available. Are you on a development build?", result.getNewestVersion()));
                 } else {
                     this.getLogger().warning("Could not check for a new version of StrixReport. Reason: " + reason);
@@ -46,44 +46,42 @@ public class SReport extends JavaPlugin implements Listener {
         loadEvents();
         loadCommands();
 
-        Cooldowns.createCooldown("report");
+        cooldowns.createCooldown("report");
 
     }
 
     private void loadEvents() {
-        Bukkit.getPluginManager().registerEvents(new ReportGUI(), this);
-        Bukkit.getPluginManager().registerEvents(new StrixReport(), this);
-        Bukkit.getPluginManager().registerEvents(new Utils(), this);
+        Bukkit.getPluginManager().registerEvents(new reportGUI(), this);
+        Bukkit.getPluginManager().registerEvents(new strixreport(), this);
+        Bukkit.getPluginManager().registerEvents(new utils(), this);
         Bukkit.getPluginManager().registerEvents(this, this);
     }
 
     private void loadCommands() {
-        getCommand("strixreport").setTabCompleter(new StrixReport());
-        getCommand("togglereport").setExecutor(new CommandToggle());
-        getCommand("report").setExecutor(new CommandReport());
-        getCommand("strixreport").setExecutor(new StrixReport());
+        getCommand("strixreport").setTabCompleter(new strixreport());
+        getCommand("togglereport").setExecutor(new commandToggle());
+        getCommand("report").setExecutor(new commandReport());
+        getCommand("strixreport").setExecutor(new strixreport());
     }
 
     @EventHandler
     public void updateJoin(PlayerJoinEvent e) {
-        if (getConfig().getBoolean("check_updates")) {
-            if (e.getPlayer().isOp() || e.getPlayer().hasPermission(getConfig().getString("permissions.report.admin"))) {
-                UpdateChecker.init(this, 42151).requestUpdateCheck().whenComplete((result, exception) -> {
+        if (getConfig().getBoolean("check_updates") || e.getPlayer().isOp() || e.getPlayer().hasPermission(getConfig().getString("permissions.report.admin")) ) {
+                updateChecker.init(this, 42151).requestUpdateCheck().whenComplete((result, exception) -> {
                     if (result.requiresUpdate()) {
-                        e.getPlayer().sendMessage(String.format(Utils.c("§cAn update is available! StrixReport %s may be downloaded on SpigotMC"), result.getNewestVersion()));
+                        e.getPlayer().sendMessage(String.format(utils.c("§cAn update is available! StrixReport %s may be downloaded on SpigotMC"), result.getNewestVersion()));
                         return;
                     }
 
-                    UpdateChecker.UpdateReason reason = result.getReason();
-                    if (reason == UpdateChecker.UpdateReason.UP_TO_DATE) {
+                    updateChecker.UpdateReason reason = result.getReason();
+                    if (reason == updateChecker.UpdateReason.UP_TO_DATE) {
                         e.getPlayer().sendMessage(String.format("§aYour version of StrixReport (%s) is up to date!", result.getNewestVersion()));
-                    } else if (reason == UpdateChecker.UpdateReason.UNRELEASED_VERSION) {
+                    } else if (reason == updateChecker.UpdateReason.UNRELEASED_VERSION) {
                         e.getPlayer().sendMessage(String.format("§eYour version of StrixReport (%s) is more recent than the one publicly available. Are you on a development build?", result.getNewestVersion()));
                     } else {
                         e.getPlayer().sendMessage("§4Could not check for a new version of StrixReport. Reason: " + reason);
                     }
                 });
-            }
         }
     }
 
